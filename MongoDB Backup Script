@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Set variables
+HOST="*********"
+PORT="27017"
+USER="**********"
+PASSWORD="*********"
+AUTH_DB="admin"
+DATABASE="CommonNotificationDataBase"
+TIMESTAMP=$(date +\%F_\%H-\%M-\%S)
+BACKUP_DIR="/mongoDB_DATA/dbbackup/${DATABASE}_${TIMESTAMP}"
+
+# Create backup directory if it doesn't exist
+mkdir -p $BACKUP_DIR
+
+# Perform the backup
+mongodump --host $HOST --port $PORT --username $USER --password $PASSWORD --authenticationDatabase $AUTH_DB --db $DATABASE --out $BACKUP_DIR
+
+# Optional: Remove backups older than 7 days
+#find /mongoDB_DATA/dbbackup/ -type d -mtime +7 -exec rm -rf {} \;
+
